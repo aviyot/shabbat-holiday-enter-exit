@@ -1,6 +1,6 @@
 {
   "name": "shabbat-holiday-enter-exit",
-  "short_name": "shabbat-holiday-enter-exit",
+  "short_name": "כניסה יציאה שבת",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
