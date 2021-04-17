@@ -1,0 +1,15 @@
+#data-list div span {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 4px;
+}
+
+#data-list div {
+display: flex;
+}
+
+#data-list {
+    background-color: rgba(0,0,255,0.2);
+    color: white;
+
+}
