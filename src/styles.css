@@ -1,6 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-    margin: 0;
+* {
+    box-sizing: border-box;
+}
+html,body {
     height: 100%;
-    background-image: url('../src/assets/cover.jpg');
+}
+body {
+   background-image: url('../src/assets/cover.jpg'); 
+    background-position: center;
+    background-size: cover;
+    margin: 0;
+}
+
+app-root {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 9fr 1fr;
+    text-align: right;
+    background-color: black;
+    opacity: 0.6;
+    row-gap: 8px;
+    color:white;
+    padding: 12px;
 }

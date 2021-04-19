@@ -1,15 +1,81 @@
-#data-list div span {
-    flex: 1 1 0;
+
+
+header h1 {
     text-align: center;
-    padding: 4px;
+    margin: 1px;
+    font-size: xx-large;
+    box-shadow: 1px 1px 2px 2px white ;
 }
 
-#data-list div {
-display: flex;
+header div {
+    place-self:center;
+
 }
 
-#data-list {
-    background-color: rgba(0,0,255,0.3);
+
+
+#data {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    border: 1px solid white;
+
+}
+
+#data div span {
+    place-self: center;
+}
+
+#data div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+section header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid white;
+}
+
+footer {
+    align-self: center;
+}
+
+nav {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    font-size: x-large;
+    border: 1px solid white;
+
+}
+
+
+
+nav a {
+    align-self: center;
+    place-self: center;
+}
+
+main {
+
+    font-size: x-large;
+}
+
+a {
+    text-decoration: none;
+    
+}
+
+a:hover {
     color: white;
+    box-shadow: 2px 2px;
+}
 
+a:visited {
+    color: white;
+}
+
+
+#data-title {
+font-weight: bold;
+color: wheat;
 }

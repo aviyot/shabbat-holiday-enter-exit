@@ -37,13 +37,16 @@ export class AppComponent implements OnInit {
       });
   }
 
-  goNextPage() {
+  goNextEvent() {
     this.page++;
     this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1));
   }
-  goBackPage() {
+  goBackEvent() {
     if (this.page) this.page--;
     this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1))
+
+  }
+  goNearEvent(){
 
   }
 }

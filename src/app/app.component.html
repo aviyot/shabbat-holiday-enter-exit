@@ -1,7 +1,7 @@
-<!-- <div style="display: flex;justify-content: space-between;margin: 2px;padding: 4px"> 
+<!--  <div style="display: flex;justify-content: space-between;margin: 2px;padding: 4px"> 
   <button (click)="goNextPage()" style="background-color: blue;color:white;padding: 4px">מועד הבא</button>
   <button (click)="goBackPage()" style="background-color: blue;color:white;padding: 4px">מועד הקודם</button>
-</div> -->
+</div> 
 <div >
   <div style="font-size: xx-large;text-align: center;margin: 8px;">{{title}}</div>
   <div *ngFor="let rec of records" style="margin-bottom: 8px">
@@ -43,13 +43,59 @@
         <span>חיפה</span>
       </div>
     </div>
-
-    <!-- 
-      { "_id": 1, "parasha": "ראש השנה", "heb_date": "א' תשרי ה'תש\"פ", "date": "2019-09-30T00:00:00", "type": "חג", "Jerusalem_in": "17:47:00", "Jerusalem_out": "19:03:00", "TelAviv_in": "18:09:00", "TelAviv_out": "19:05:00", "Hayfa_in": "17:58:00", "Hayfa_out": "19:04:00", "BeerSheva_in": "18:09:00", "BeerSheva_out": "19:05:00" }
-     -->
   </div>
 </div>
 <div style="position: absolute;bottom: 8px;right: 8px;">
   <span style="padding: 12px;">המידע נלקח מ:</span>
   <a href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
 </div>
+ -->
+<header>
+  <h1>{{title}}</h1>
+</header>
+<nav>
+  <a (click)="goNextEvent()"  href="#">מועד הבא</a>
+  <a (click)="goNearEvent()" href="#">מועד הקרוב</a>
+  <a (click)="goBackEvent()" href="#">מועד הקודם</a>
+</nav>
+<main>
+  <section *ngFor="let rec of records">
+    <header>
+      <div> {{rec.heb_date}}</div>
+      <div> {{rec.date | date:'dd.MM.YYYY' }}</div>
+      <div> {{rec.parasha}}</div>
+      <div>{{rec.type}}</div>
+    </header>
+    <div id="data">
+      <div id="data-title">
+        <span>כניסה</span>
+        <span>יציאה</span>
+        <span>עיר</span>
+      </div>
+      <div>
+        <span> {{rec.Jerusalem_in | hm}}</span>
+        <span> {{rec.Jerusalem_out | hm}}</span>
+        <span>ירושלים</span>
+      </div>
+      <div>
+        <span> {{rec.TelAviv_in | hm}}</span>
+        <span> {{rec.TelAviv_out | hm}}</span>
+        <span>תל אביב</span>
+      </div>
+      <div>
+        <span> {{rec.BeerSheva_in | hm}}</span>
+        <span> {{rec.BeerSheva_out | hm}}</span>
+        <span>באר שבע</span>
+      </div>
+      <div>
+        <span> {{rec.Hayfa_in | hm}}</span>
+        <span> {{rec.Hayfa_out | hm}}</span>
+        <span>חיפה</span>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <span>המידע נלקח מ </span>
+  <a href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
+</footer>
