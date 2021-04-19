@@ -59,12 +59,12 @@
   <a (click)="goBackEvent()" href="#">מועד הקודם</a>
 </nav>
 <main>
-  <section *ngFor="let rec of records">
+  <section  *ngIf="dataLoaded" >
     <header>
-      <div> {{rec.heb_date}}</div>
-      <div> {{rec.date | date:'dd.MM.YYYY' }}</div>
-      <div> {{rec.parasha}}</div>
-      <div>{{rec.type}}</div>
+      <div> {{futureEvent.heb_date}}</div>
+      <div> {{futureEvent.date | date:'dd.MM.YYYY' }}</div>
+      <div> {{futureEvent.parasha}}</div>
+      <div>{{futureEvent.type}}</div>
     </header>
     <div id="data">
       <div id="data-title">
@@ -73,29 +73,30 @@
         <span>עיר</span>
       </div>
       <div>
-        <span> {{rec.Jerusalem_in | hm}}</span>
-        <span> {{rec.Jerusalem_out | hm}}</span>
+        <span> {{futureEvent.Jerusalem_in | hm}}</span>
+        <span> {{futureEvent.Jerusalem_out | hm}}</span>
         <span>ירושלים</span>
       </div>
       <div>
-        <span> {{rec.TelAviv_in | hm}}</span>
-        <span> {{rec.TelAviv_out | hm}}</span>
+        <span> {{futureEvent.TelAviv_in | hm}}</span>
+        <span> {{futureEvent.TelAviv_out | hm}}</span>
         <span>תל אביב</span>
       </div>
       <div>
-        <span> {{rec.BeerSheva_in | hm}}</span>
-        <span> {{rec.BeerSheva_out | hm}}</span>
+        <span> {{futureEvent.BeerSheva_in | hm}}</span>
+        <span> {{futureEvent.BeerSheva_out | hm}}</span>
         <span>באר שבע</span>
       </div>
       <div>
-        <span> {{rec.Hayfa_in | hm}}</span>
-        <span> {{rec.Hayfa_out | hm}}</span>
+        <span> {{futureEvent.Hayfa_in | hm}}</span>
+        <span> {{futureEvent.Hayfa_out | hm}}</span>
         <span>חיפה</span>
       </div>
     </div>
   </section>
+<div *ngIf="!dataLoaded">טוען נתונים</div>
 </main>
-<footer>
+<footer *ngIf="dataLoaded">
   <span>המידע נלקח מ </span>
   <a href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
 </footer>
