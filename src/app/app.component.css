@@ -1,81 +1,84 @@
-
-
 header h1 {
-    text-align: center;
-    margin: 1px;
-    font-size: xx-large;
-    box-shadow: 1px 1px 2px 2px white ;
+  text-align: center;
+  margin: 1px;
+  font-size: x-large;
+  box-shadow: 1px 1px 2px 2px white;
 }
 
 header div {
-    place-self:center;
+  place-self: center;
+}
 
+.data {
+  display: grid;
+  grid-template-areas: "exit enter city";
+  border: 1px solid white;
+  justify-content: space-around;
+}
+
+.data-item {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.data-item  > span:first-child {
+  font-weight: bold;
+  color: wheat;
+  padding: 4px;
+}
+
+.enter {
+  grid-area: enter;
+}
+
+.exit {
+  grid-area: exit;
+}
+.city {
+  grid-area: city;
 }
 
 
-
-#data {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    border: 1px solid white;
+.data-capthion {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-around;
 
 }
-
-#data div span {
-    place-self: center;
-}
-
-#data div{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-section header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 1px solid white;
+.data-capthion > :nth-child(3) {
+    grid-column-start: 1;
+   grid-column-end: 3;
 }
 
 footer {
-    align-self: center;
+  align-self: center;
 }
 
 nav {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    font-size: x-large;
-    border: 1px solid white;
-
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  font-size: x-large;
+  border: 1px solid white;
 }
 
-
-
 nav a {
-    align-self: center;
-    place-self: center;
+  align-self: center;
+  place-self: center;
 }
 
 main {
-
-    font-size: x-large;
+  font-size: x-large;
 }
 
 a {
-    text-decoration: none;
-    
+  text-decoration: none;
 }
 
 a:hover {
-    color: white;
-    box-shadow: 2px 2px;
+  color: white;
+  box-shadow: 2px 2px;
 }
 
 a:visited {
-    color: white;
-}
-
-
-#data-title {
-font-weight: bold;
-color: wheat;
+  color: white;
 }

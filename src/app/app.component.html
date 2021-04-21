@@ -2,47 +2,45 @@
   <h1>{{title}}</h1>
 </header>
 <nav>
-  <a (click)="goNextEvent()"  href="#">מועד הבא</a>
+  <a (click)="goNextEvent()" href="#"> &lArr;</a>
   <a (click)="goNearEvent()" href="#">מועד הקרוב</a>
-  <a (click)="goBackEvent()" href="#">מועד הקודם</a>
+  <a (click)="goBackEvent()" href="#">&rArr; </a>
 </nav>
 <main>
-  <section  *ngIf="dataLoaded" >
-    <header>
-      <div> {{futureEvent.heb_date}}</div>
-      <div> {{futureEvent.date | date:'dd.MM.YYYY' }}</div>
-      <div> {{futureEvent.parasha}}</div>
-      <div>{{futureEvent.type}}</div>
+  <section *ngIf="dataLoaded">
+    <header class="data-capthion">
+        <span> {{futureEvent.date | date:'dd.MM.YYYY' }}</span>
+        <span> {{futureEvent.heb_date}}</span>
+        <div style="letter-spacing: 4px; padding: 4px;">
+        <span *ngIf="futureEvent.type =='שבת'" style="padding: 4px;">{{futureEvent.type+ ' '+' פרשת ' }}</span>
+        <span>{{futureEvent.parasha}} </span>
+      </div>
     </header>
-    <div id="data">
-      <div id="data-title">
-        <span>כניסה</span>
-        <span>יציאה</span>
+    <div class="data">
+      <div class="data-item city">
         <span>עיר</span>
-      </div>
-      <div>
-        <span> {{futureEvent.Jerusalem_in | hm}}</span>
-        <span> {{futureEvent.Jerusalem_out | hm}}</span>
         <span>ירושלים</span>
-      </div>
-      <div>
-        <span> {{futureEvent.TelAviv_in | hm}}</span>
-        <span> {{futureEvent.TelAviv_out | hm}}</span>
         <span>תל אביב</span>
-      </div>
-      <div>
-        <span> {{futureEvent.BeerSheva_in | hm}}</span>
-        <span> {{futureEvent.BeerSheva_out | hm}}</span>
         <span>באר שבע</span>
-      </div>
-      <div>
-        <span> {{futureEvent.Hayfa_in | hm}}</span>
-        <span> {{futureEvent.Hayfa_out | hm}}</span>
         <span>חיפה</span>
+      </div>
+      <div class="data-item enter">
+        <span>כניסה</span>
+        <span> {{futureEvent.Jerusalem_in | hm}}</span>
+        <span> {{futureEvent.TelAviv_in | hm}}</span>
+        <span> {{futureEvent.BeerSheva_in | hm}}</span>
+        <span> {{futureEvent.Hayfa_in | hm}}</span>
+      </div>
+      <div class="data-item exit">
+        <span>יציאה</span>
+        <span> {{futureEvent.Jerusalem_out | hm}}</span>
+        <span> {{futureEvent.TelAviv_out | hm}}</span>
+        <span> {{futureEvent.BeerSheva_out | hm}}</span>
+        <span> {{futureEvent.Hayfa_out | hm}}</span>
       </div>
     </div>
   </section>
-<div *ngIf="!dataLoaded">טוען נתונים</div>
+  <div *ngIf="!dataLoaded">טוען נתונים</div>
 </main>
 <footer *ngIf="dataLoaded">
   <span>המידע נלקח מ </span>
