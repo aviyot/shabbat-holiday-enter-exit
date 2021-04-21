@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
         records = res.result.records;
         this.recordSize = records.length;
         this.dataLoaded = true;
-        console.log(this.recordSize);
         records.sort((a, b) => {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
         });
