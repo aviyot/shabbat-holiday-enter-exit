@@ -45,6 +45,7 @@ header div {
 }
 footer {
   align-self: center;
+  margin: 1rem;
 }
 
 nav {
