@@ -2,17 +2,20 @@
   <h1>{{title}}</h1>
 </header>
 <nav>
-  <a (click)="goNextEvent()" href="#"> &lArr;</a>
-  <a (click)="goNearEvent()" href="#">מועד הקרוב</a>
-  <a (click)="goBackEvent()" href="#">&rArr; </a>
+  <button (click)="goNextEvent()" href="#"> הקודם</button>
+  <button (click)="goNearEvent()" href="#">מועד הקרוב</button>
+  <button (click)="goBackEvent()" href="#">הבא</button>
 </nav>
 <main>
   <section *ngIf="dataLoaded">
     <header class="data-capthion">
+      <div class="data-capthion-item">
         <span> {{futureEvent.date | date:'dd.MM.YYYY' }}</span>
+        <span>{{' '}}</span>
         <span> {{futureEvent.heb_date}}</span>
-        <div style="letter-spacing: 2px; padding: 4px;">
-        <span *ngIf="futureEvent.type =='שבת'" style="padding: 4px;">{{futureEvent.type+ ' '+' פרשת ' }}</span>
+      </div>
+        <div class="data-capthion-item">
+        <span *ngIf="futureEvent.type =='שבת'" >{{futureEvent.type+ ' '+' פרשת ' }}</span>
         <span>{{futureEvent.parasha}} </span>
       </div>
     </header>

@@ -15,6 +15,7 @@ interface ShabatEnteExit {
   BeerSheva_out:string,
   Hayfa_in:string,
   Hayfa_out:string
+  navigationPos:0;
 }
 @Component({
   selector: 'app-root',
