@@ -1,8 +1,9 @@
 header h1 {
   text-align: center;
-  margin: 1px;
-  font-size: x-large;
-  box-shadow: 1px 1px 2px 2px white;
+  margin: 0.1rem;
+  box-shadow: 0.1rem 0.1rem 0.2rem 0.2rem white;
+  font-size: 2rem;
+  padding: 1rem;
 }
 
 header div {
@@ -40,16 +41,16 @@ header div {
 
 
 .data-capthion {
-  display: grid;
+
+/*   display: grid;
   grid-template-columns: auto auto;
-  justify-content: space-around;
+  justify-content: space-around; */
 
 }
-.data-capthion > :nth-child(3) {
-    grid-column-start: 1;
-   grid-column-end: 3;
-}
 
+.data-capthion-item {
+  text-align: center;
+}
 footer {
   align-self: center;
 }
@@ -57,17 +58,24 @@ footer {
 nav {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  font-size: x-large;
-  border: 1px solid white;
+  justify-content: space-around;
+  font-size: 1.5rem;
+/*   border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white; */
+  padding: 0.5rem;
 }
 
-nav a {
-  align-self: center;
+nav button {
   place-self: center;
+  background-color:black;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.2rem;
 }
 
 main {
-  font-size: x-large;
+  font-size: 1.5rem;
 }
 
 a {
