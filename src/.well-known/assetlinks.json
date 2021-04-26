@@ -1,5 +1,10 @@
 [{
       "relation": ["delegate_permission/common.handle_all_urls"],
-      "target" : { "namespace": "android_app", "package_name": "app.vercel.shabbat_holiday_enter_exit.twa",
-                   "sha256_cert_fingerprints": ["DE:23:AF:CB:8E:BD:D5:17:89:9A:46:E0:10:BE:0B:AA:95:F4:86:FF:F8:56:DE:58:AB:BC:39:B3:ED:72:3B:15"] }
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.shabbat_holiday_enter_exit.twa",
+        "sha256_cert_fingerprints": [
+          "81:F4:A4:8F:05:AA:F5:51:BC:DD:E4:B7:40:33:D3:44:D7:DE:64:2A:F4:7F:9A:3B:55:AF:FD:DD:19:B7:04:E9"
+        ]
+      }
     }]
