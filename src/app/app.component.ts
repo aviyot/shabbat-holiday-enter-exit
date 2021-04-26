@@ -23,7 +23,7 @@ interface ShabatEnteExit {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'כניסה ויציאה שבת וחג';
+  title = 'כניסת ויציאת שבת וחג';
   readonly API = 'https://data.gov.il/api/3/action/datastore_search?';
   dataLoaded = false;
   allrecords:ShabatEnteExit[];
