@@ -2,16 +2,16 @@
   <h1>{{title}}</h1>
 </header>
 <nav>
-  <button (click)="goNextEvent()" href="#"> הקודם</button>
+  <button  (click)="goBackEvent()"  href="#"> הקודם</button>
   <button (click)="goNearEvent()" href="#">מועד הקרוב</button>
-  <button (click)="goBackEvent()" href="#">הבא</button>
+  <button (click)="goNextEvent()"  href="#">הבא</button>
 </nav>
 <main>
   <section *ngIf="dataLoaded">
     <header class="data-capthion">
       <div class="data-capthion-item">
         <span> {{futureEvent.date | date:'dd.MM.YYYY' }}</span>
-        <span>{{' '}}</span>
+        <span style="padding: 0 0.5rem;">{{' '}}</span>
         <span> {{futureEvent.heb_date}}</span>
       </div>
         <div class="data-capthion-item">
