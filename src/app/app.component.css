@@ -1,19 +1,18 @@
-header h1 {
+.header h1 {
   text-align: center;
   margin: 0.1rem;
-  box-shadow: 0.1rem 0.1rem 0.2rem 0.2rem white;
   font-size: 2rem;
   padding: 1rem;
+  border-bottom: 1px solid gray;
 }
 
-header div {
+.header div {
   place-self: center;
 }
 
 .data {
   display: grid;
   grid-template-areas: "exit enter city";
-  border: 1px solid white;
   justify-content: space-around;
 }
 
@@ -22,7 +21,7 @@ header div {
   grid-template-columns: auto;
 }
 
-.data-item  > span:first-child {
+.data-item > span:first-child {
   font-weight: bold;
   color: wheat;
   padding: 4px;
@@ -39,49 +38,57 @@ header div {
   grid-area: city;
 }
 
+.data-capthion {
+  color:orange;
+}
 
 .data-capthion-item {
   text-align: center;
   font-size: 1.8rem;
   margin: 1rem 0;
 }
-footer {
+.footer {
   align-self: center;
   margin: 1rem;
 }
 
-nav {
+.nav {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: minmax(60px, 1fr) minmax(120px, 2fr) minmax(60px, 1fr);
   justify-content: space-around;
   font-size: 1.5rem;
-/*   border-top: 1px solid white;
+  /*   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white; */
-  padding: 0.5rem;
 }
 
-nav button {
-  place-self: center;
-  background-color:black;
+.nav button {
+  background-color: black;
   color: white;
   font-size: 1.5rem;
   padding: 0.2rem;
 }
 
-main {
+.nav button:active {
+  background-color: gray;
+}
+
+.main {
   font-size: 1.5rem;
 }
 
-a {
+.h-link {
   text-decoration: none;
 }
 
-a:hover {
+.h-link:hover {
   color: white;
-  box-shadow: 2px 2px;
 }
 
 a:visited {
   color: white;
+}
+
+.data-item span {
+  padding: 0.2rem;
 }

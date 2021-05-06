@@ -1,14 +1,14 @@
-<header>
+<header class="header">
   <h1>{{title}}</h1>
 </header>
-<nav>
+<nav class="nav">
   <button  (click)="goBackEvent()"  href="#"> הקודם</button>
   <button (click)="goNearEvent()" href="#">מועד הקרוב</button>
   <button (click)="goNextEvent()"  href="#">הבא</button>
 </nav>
-<main>
+<main class="main">
   <section *ngIf="dataLoaded">
-    <header class="data-capthion">
+    <header [ngClass]="{'data-capthion':eventIndex==futureEventIndex}">
       <div class="data-capthion-item">
         <span> {{futureEvent.date | date:'dd.MM.YYYY' }}</span>
         <span style="padding: 0 0.5rem;">{{' '}}</span>
@@ -45,7 +45,7 @@
   </section>
   <div *ngIf="!dataLoaded">טוען נתונים</div>
 </main>
-<footer *ngIf="dataLoaded">
+<footer *ngIf="dataLoaded" class="footer">
   <span>המידע נלקח מ </span>
-  <a href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
+  <a class="h-link" href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
 </footer>
