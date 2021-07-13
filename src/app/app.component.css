@@ -72,6 +72,9 @@
 .nav button:active {
   background-color: gray;
 }
+.nav button:hover {
+  background-color: gray;
+}
 
 .main {
   font-size: 1.5rem;
