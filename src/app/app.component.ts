@@ -1,21 +1,20 @@
-import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 interface ShabatEnteExit {
-  heb_date:string,
-  date:string,
-  parasha:string,
-  type:string,
-  Jerusalem_in:string,
-  Jerusalem_out:string,
-  TelAviv_in:string
-  TelAviv_out:string,
-  BeerSheva_in:string,
-  BeerSheva_out:string,
-  Hayfa_in:string,
-  Hayfa_out:string
-  navigationPos:0;
+  heb_date: string;
+  date: string;
+  parasha: string;
+  type: string;
+  Jerusalem_in: string;
+  Jerusalem_out: string;
+  TelAviv_in: string;
+  TelAviv_out: string;
+  BeerSheva_in: string;
+  BeerSheva_out: string;
+  Hayfa_in: string;
+  Hayfa_out: string;
+  navigationPos: 0;
 }
 @Component({
   selector: 'app-root',
@@ -26,11 +25,11 @@ export class AppComponent implements OnInit {
   title = 'כניסת ויציאת שבת וחג';
   readonly API = 'https://data.gov.il/api/3/action/datastore_search?';
   dataLoaded = false;
-  allrecords:ShabatEnteExit[];
-  futureEventIndex:number;
-  eventIndex:number;
-  futureEvent:ShabatEnteExit;
-  recordSize:number;
+  allrecords: ShabatEnteExit[];
+  futureEventIndex: number;
+  eventIndex: number;
+  futureEvent: ShabatEnteExit;
+  recordSize: number;
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -45,33 +44,28 @@ export class AppComponent implements OnInit {
         records.sort((a, b) => {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
         });
-        this.futureEventIndex = records
-          .findIndex((val) => {
-            return new Date(val.date).getTime() > (new Date().getTime()-86400000);
-          })
-          this.allrecords = records;
-          this.eventIndex = this.futureEventIndex;
-         this.futureEvent = this.allrecords[this.futureEventIndex];
+        this.futureEventIndex = records.findIndex((val) => {
+          return new Date(val.date).getTime() > new Date().getTime() - 86400000;
+        });
+        this.allrecords = records;
+        this.eventIndex = this.futureEventIndex;
+        this.futureEvent = this.allrecords[this.futureEventIndex];
         //this.records = this.futureRecords.slice(this.pageSize * this.page, this.pageSize * (this.page + 1));;
       });
   }
 
   goNextEvent() {
-    if(this.eventIndex < this.recordSize)
-       this.eventIndex++;
+    if (this.eventIndex < this.recordSize) this.eventIndex++;
     this.futureEvent = this.allrecords[this.eventIndex];
     //this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1));
   }
   goBackEvent() {
-  //  if (this.page) this.page--;
+    //  if (this.page) this.page--;
     //this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1))
-    if(this.eventIndex--)
-    this.futureEvent = this.allrecords[this.eventIndex];
-
+    if (this.eventIndex--) this.futureEvent = this.allrecords[this.eventIndex];
   }
-  goNearEvent(){
-this.eventIndex = this.futureEventIndex;
+  goNearEvent() {
+    this.eventIndex = this.futureEventIndex;
     this.futureEvent = this.allrecords[this.eventIndex];
-
   }
 }
