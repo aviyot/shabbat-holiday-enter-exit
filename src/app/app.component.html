@@ -12,13 +12,15 @@
       <div class="data-capthion-item">
         <span> {{futureEvent.date | date:'dd.MM.YYYY' }}</span>
         <span style="padding: 0 0.5rem;">{{' '}}</span>
-        <span style="font-weight: bold;" *ngIf="futureEvent.type !=='שבת'">{{futureEvent.date | date:'EEEE' | hebWeek}}
-        </span>
         <span> {{futureEvent.heb_date}}</span>
       </div>
       <div class="data-capthion-item">
         <span *ngIf="futureEvent.type =='שבת'">{{futureEvent.type+ ' '+' פרשת ' }}</span>
         <span>{{futureEvent.parasha}} </span>
+        <span style="font-weight: bold;"
+          *ngIf="futureEvent.type !=='שבת' && futureEvent.type !=='שבת חג'">({{futureEvent.date |
+          date:'EEEE' | hebWeek}})
+        </span>
       </div>
     </header>
     <div class="data">
