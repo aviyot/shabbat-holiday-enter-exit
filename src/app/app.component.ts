@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.ls) {
+    if (this.ls && this.ls.getItem('shabatHolidyTime')) {
       this.loadFromLocal();
     } else {
       this.fetchData();
