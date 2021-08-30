@@ -2,9 +2,21 @@
   <h1>{{title}}</h1>
 </header>
 <nav class="nav">
-  <button (click)="goNextEvent()" href="#">הבא</button>
-  <button (click)="goNearEvent()" href="#">מועד הקרוב</button>
-  <button (click)="goBackEvent()" href="#"> הקודם</button>
+  <button (click)="goNextEvent()" href="#">
+    <span>הבא</span>
+    <span style="margin: 0.5rem;padding: 0.5rem;background-color: black;"
+      *ngIf="eventPosition > 0">{{eventPosition}}</span>
+  </button>
+  <button (click)="goNearEvent()" href="#">
+    <span>מועד הקרוב</span>
+  </button>
+  <button (click)="goBackEvent()" href="#">
+    <span>הקודם
+    </span>
+    <span style="margin: 0.5rem;padding: 0.5rem;background-color: black;"
+      *ngIf="eventPosition < 0">{{eventPosition}}</span>
+
+  </button>
 </nav>
 <main class="main">
   <section *ngIf="dataLoaded">

@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   fromLocal = false;
   updateDate: Date;
   ls;
+  eventPosition: number;
 
   constructor(private http: HttpClient) {
     this.ls = window.localStorage;
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
       });
       this.allrecords = this.records;
       this.eventIndex = this.futureEventIndex;
+      this.eventPosition = this.futureEventIndex - this.eventIndex;
       this.futureEvent = { ...this.allrecords[this.futureEventIndex] };
       this.dataLoaded = true;
       this.fromLocal = true;
@@ -85,6 +87,7 @@ export class AppComponent implements OnInit {
         });
         this.allrecords = this.records;
         this.eventIndex = this.futureEventIndex;
+        this.eventPosition = this.futureEventIndex - this.eventIndex;
         this.futureEvent = this.allrecords[this.futureEventIndex];
         //this.records = this.futureRecords.slice(this.pageSize * this.page, this.pageSize * (this.page + 1));;
       });
@@ -95,15 +98,19 @@ export class AppComponent implements OnInit {
   goNextEvent() {
     if (this.eventIndex < this.recordSize) this.eventIndex++;
     this.futureEvent = this.allrecords[this.eventIndex];
+    this.eventPosition = this.eventIndex - this.futureEventIndex;
     //this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1));
   }
   goBackEvent() {
     //  if (this.page) this.page--;
     //this.records = this.futureRecords.slice(this.pageSize * this.page,this.pageSize * (this.page + 1))
+
     if (this.eventIndex--) this.futureEvent = this.allrecords[this.eventIndex];
+    this.eventPosition = this.eventIndex - this.futureEventIndex;
   }
   goNearEvent() {
     this.eventIndex = this.futureEventIndex;
     this.futureEvent = this.allrecords[this.eventIndex];
+    this.eventPosition = this.eventIndex - this.futureEventIndex;
   }
 }
