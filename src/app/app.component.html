@@ -50,6 +50,7 @@
   <div *ngIf="!dataLoaded">טוען נתונים</div>
 </main>
 <footer *ngIf="dataLoaded" class="footer">
-  <span>המידע נלקח מ </span>
+  <span [ngStyle]="{'color':fromLocal ? 'orange' : 'green' }">המידע נלקח מ </span>
   <a class="h-link" href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>
+  <button style="color: green;" (click)="manualFetch()">טעןמהשרת</button>
 </footer>
