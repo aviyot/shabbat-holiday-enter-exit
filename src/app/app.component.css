@@ -95,3 +95,17 @@ a:visited {
 .data-item span {
   padding: 0.2rem;
 }
+
+@keyframes load {
+  from {
+    font-size: x-small;
+  }
+  to {
+    font-size: x-large;
+  }
+}
+.load {
+  animation-name: load;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}

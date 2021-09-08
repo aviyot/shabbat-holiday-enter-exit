@@ -59,7 +59,10 @@
       </div>
     </div>
   </section>
-  <div *ngIf="!dataLoaded">טוען נתונים</div>
+  <div style="display: flex;justify-content: center;margin-top: 4rem;" *ngIf="!dataLoaded">
+    <span class="load">...טוען נתונים
+    </span>
+  </div>
 </main>
 <footer *ngIf="dataLoaded" class="footer">
   <span [ngStyle]="{'color':fromLocal ? 'orange' : 'green' }">המידע נלקח מ </span>
