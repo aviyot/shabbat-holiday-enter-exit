@@ -115,9 +115,7 @@ export class AppComponent implements OnInit {
   }
   share() {
     const shareData: ShareData = {
-      title: `${this.futureEvent.parasha} ${this.futureEvent.type} ${
-        this.futureEvent.heb_date
-      } ${this.futureEvent.date.slice(0, 10)}`,
+      title: `זמני כניסה ויצאת שבתות וחגים`,
       text: `${this.futureEvent.parasha} ${this.futureEvent.type} ${
         this.futureEvent.heb_date
       } ${this.futureEvent.date.slice(0, 10)}`,
