@@ -64,6 +64,9 @@
     </span>
   </div>
 </main>
+<div style="display: flex;justify-content: center;">
+  <button style="padding: 0.5rem 2rem;font-size: 1rem;margin: 1rem" (click)="share()"> שתף</button>
+</div>
 <footer *ngIf="dataLoaded" class="footer">
   <span [ngStyle]="{'color':fromLocal ? 'orange' : 'green' }">המידע נלקח מ </span>
   <a class="h-link" href="https://data.gov.il/organization/religion-office" target="_blank">המשרד לשירותי הדת</a>

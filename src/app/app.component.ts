@@ -113,4 +113,16 @@ export class AppComponent implements OnInit {
     this.futureEvent = this.allrecords[this.eventIndex];
     this.eventPosition = this.eventIndex - this.futureEventIndex;
   }
+  share() {
+    const shareData: ShareData = {
+      title: `${this.futureEvent.parasha} ${this.futureEvent.type} ${
+        this.futureEvent.heb_date
+      } ${this.futureEvent.date.slice(0, 10)}`,
+      text: `${this.futureEvent.parasha} ${this.futureEvent.type} ${
+        this.futureEvent.heb_date
+      } ${this.futureEvent.date.slice(0, 10)}`,
+      url: 'https://shabbat-holiday-enter-exit.vercel.app/',
+    };
+    navigator.share(shareData).then(() => {});
+  }
 }
