@@ -143,7 +143,7 @@ ${this.futureEvent.date.slice(0, 10)}
     const shareData: ShareData = {
       title: `זמני כניסה ויצאת שבתות וחגים`,
       text: message,
-      url: 'https://play.google.com/store/apps/details?id=app.vercel.shabbat_holiday_enter_exit.twa',
+      url: 'https://shabbat-holiday-enter-exit.vercel.app/',
     };
     navigator.share(shareData).then(() => {});
   }
