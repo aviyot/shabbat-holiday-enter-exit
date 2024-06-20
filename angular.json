@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "shabbat-holiday-enter-exit:build"
+            "buildTarget": "shabbat-holiday-enter-exit:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "shabbat-holiday-enter-exit:build:production"
+              "buildTarget": "shabbat-holiday-enter-exit:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shabbat-holiday-enter-exit:build"
+            "buildTarget": "shabbat-holiday-enter-exit:build"
           }
         },
         "test": {
