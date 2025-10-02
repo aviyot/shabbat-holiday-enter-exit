@@ -128,6 +128,15 @@ export class AppComponent implements OnInit {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
         });
 
+        // Always update the last check timestamp after successful fetch
+        if (this.ls) {
+          this.ls.setItem(
+            'shabatHolidyTime_lastUpdate',
+            new Date().toISOString()
+          );
+        }
+        this.updateDate = new Date();
+
         // Check if data has changed
         const dataChanged =
           !this.records ||
@@ -137,16 +146,11 @@ export class AppComponent implements OnInit {
         if (dataChanged && this.ls) {
           // Update stored data
           this.ls.setItem('shabatHolidyTime', JSON.stringify(newRecords));
-          this.ls.setItem(
-            'shabatHolidyTime_lastUpdate',
-            new Date().toISOString()
-          );
 
           // Update current data
           this.records = newRecords;
           this.recordSize = this.records.length;
           this.allrecords = this.records;
-          this.updateDate = new Date();
 
           // Recalculate future event index
           const oldEventIndex = this.eventIndex;
