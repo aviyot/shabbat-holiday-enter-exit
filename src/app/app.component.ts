@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (this.ls && this.ls.getItem('shabatHolidyTime')) {
       this.loadFromLocal();
+      this.checkForUpdatesInBackground();
     } else {
       this.fetchData();
     }
@@ -51,6 +52,11 @@ export class AppComponent implements OnInit {
 
   loadFromLocal() {
     this.records = JSON.parse(this.ls.getItem('shabatHolidyTime'));
+    const lastUpdateStr = this.ls.getItem('shabatHolidyTime_lastUpdate');
+    if (lastUpdateStr) {
+      this.updateDate = new Date(lastUpdateStr);
+    }
+
     if (this.records) {
       this.recordSize = this.records.length;
       this.futureEventIndex = this.records.findIndex((val) => {
@@ -80,6 +86,10 @@ export class AppComponent implements OnInit {
 
         if (this.ls && this.records.length) {
           this.ls.setItem('shabatHolidyTime', JSON.stringify(this.records));
+          this.ls.setItem(
+            'shabatHolidyTime_lastUpdate',
+            new Date().toISOString()
+          );
         }
 
         this.futureEventIndex = this.records.findIndex((val) => {
@@ -94,6 +104,79 @@ export class AppComponent implements OnInit {
   }
   manualFetch() {
     this.fetchData();
+  }
+
+  checkForUpdatesInBackground() {
+    // Check if we should update (older than 7 days or no update date)
+    const shouldUpdate =
+      !this.updateDate ||
+      new Date().getTime() - this.updateDate.getTime() >
+        7 * 24 * 60 * 60 * 1000;
+
+    if (shouldUpdate) {
+      this.fetchDataInBackground();
+    }
+  }
+
+  fetchDataInBackground() {
+    this.http.get(`${this.API}${this.REQ_DATA}`).subscribe(
+      (res: { result: { records: any[] }; success: boolean }) => {
+        const newRecords = res.result.records;
+
+        // Sort new records
+        newRecords.sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        });
+
+        // Check if data has changed
+        const dataChanged =
+          !this.records ||
+          newRecords.length !== this.records.length ||
+          JSON.stringify(newRecords) !== JSON.stringify(this.records);
+
+        if (dataChanged && this.ls) {
+          // Update stored data
+          this.ls.setItem('shabatHolidyTime', JSON.stringify(newRecords));
+          this.ls.setItem(
+            'shabatHolidyTime_lastUpdate',
+            new Date().toISOString()
+          );
+
+          // Update current data
+          this.records = newRecords;
+          this.recordSize = this.records.length;
+          this.allrecords = this.records;
+          this.updateDate = new Date();
+
+          // Recalculate future event index
+          const oldEventIndex = this.eventIndex;
+          this.futureEventIndex = this.records.findIndex((val) => {
+            return (
+              new Date(val.date).getTime() > new Date().getTime() - 86400000
+            );
+          });
+
+          // Keep current position relative to new future event
+          const relativePosition = oldEventIndex - (this.eventIndex || 0);
+          this.eventIndex = this.futureEventIndex + relativePosition;
+          this.eventPosition = this.eventIndex - this.futureEventIndex;
+
+          // Update current event
+          if (this.eventIndex >= 0 && this.eventIndex < this.records.length) {
+            this.futureEvent = this.allrecords[this.eventIndex];
+          } else {
+            this.eventIndex = this.futureEventIndex;
+            this.futureEvent = this.allrecords[this.futureEventIndex];
+            this.eventPosition = 0;
+          }
+
+          this.fromLocal = false;
+        }
+      },
+      (error) => {
+        console.log('Background update failed:', error);
+      }
+    );
   }
   goNextEvent() {
     if (this.eventIndex < this.recordSize) this.eventIndex++;
