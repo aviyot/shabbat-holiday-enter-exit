@@ -203,10 +203,10 @@ export class AppComponent implements OnInit {
   share() {
     let type = this.futureEvent.type;
     if (type === 'חג') type = '';
-    const message = `🕎 ${type} ${this.futureEvent.parasha}
-📅 ${this.futureEvent.heb_date} - ${this.futureEvent.date.slice(0, 10)}
+    const message = `${type} ${this.futureEvent.parasha}
+${this.futureEvent.heb_date} - ${this.futureEvent.date.slice(0, 10)}
 
-עיר     | 🌙 כניסה | 🌅 יציאה
+עיר     | כניסה | יציאה
 ${'ירושלים'.padEnd(8, ' ')} | ${this.futureEvent.Jerusalem_in.slice(
       0,
       5
