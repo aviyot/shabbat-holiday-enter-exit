@@ -206,20 +206,20 @@ export class AppComponent implements OnInit {
     const message = `🕎 ${type} ${this.futureEvent.parasha}
 📅 ${this.futureEvent.heb_date} - ${this.futureEvent.date.slice(0, 10)}
 
-עיר       | 🌙 כניסה | 🌅 יציאה
-ירושלים  | ${this.futureEvent.Jerusalem_in.slice(
+עיר     | 🌙 כניסה | 🌅 יציאה
+${'ירושלים'.padEnd(8, ' ')} | ${this.futureEvent.Jerusalem_in.slice(
       0,
       5
     )} | ${this.futureEvent.Jerusalem_out.slice(0, 5)}
-תל אביב  | ${this.futureEvent.TelAviv_in.slice(
+${'תל אביב'.padEnd(8, ' ')} | ${this.futureEvent.TelAviv_in.slice(
       0,
       5
     )} | ${this.futureEvent.TelAviv_out.slice(0, 5)}
-באר שבע  | ${this.futureEvent.BeerSheva_in.slice(
+${'באר שבע'.padEnd(8, ' ')} | ${this.futureEvent.BeerSheva_in.slice(
       0,
       5
     )} | ${this.futureEvent.BeerSheva_out.slice(0, 5)}
-חיפה     | ${this.futureEvent.Hayfa_in.slice(
+${'חיפה'.padEnd(8, ' ')} | ${this.futureEvent.Hayfa_in.slice(
       0,
       5
     )} | ${this.futureEvent.Hayfa_out.slice(0, 5)}`;
