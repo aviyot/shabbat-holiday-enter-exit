@@ -203,29 +203,26 @@ export class AppComponent implements OnInit {
   share() {
     let type = this.futureEvent.type;
     if (type === 'חג') type = '';
-    const message = `
-${type} ${this.futureEvent.parasha}
-${this.futureEvent.heb_date}  
-${this.futureEvent.date.slice(0, 10)}
--------------------
-כניסה יציאה
-ירושלים  ${this.futureEvent.Jerusalem_in.slice(
+    const message = `🕎 ${type} ${this.futureEvent.parasha}
+📅 ${this.futureEvent.heb_date} - ${this.futureEvent.date.slice(0, 10)}
+
+עיר       | 🌙 כניסה | 🌅 יציאה
+ירושלים  | ${this.futureEvent.Jerusalem_in.slice(
       0,
       5
-    )} ${this.futureEvent.Jerusalem_out.slice(0, 5)}
-תל אביב  ${this.futureEvent.TelAviv_in.slice(
+    )} | ${this.futureEvent.Jerusalem_out.slice(0, 5)}
+תל אביב  | ${this.futureEvent.TelAviv_in.slice(
       0,
       5
-    )} ${this.futureEvent.TelAviv_out.slice(0, 5)}
-באר שבע  ${this.futureEvent.BeerSheva_in.slice(
+    )} | ${this.futureEvent.TelAviv_out.slice(0, 5)}
+באר שבע  | ${this.futureEvent.BeerSheva_in.slice(
       0,
       5
-    )} ${this.futureEvent.BeerSheva_out.slice(0, 5)}
-חיפה  ${this.futureEvent.Hayfa_in.slice(
+    )} | ${this.futureEvent.BeerSheva_out.slice(0, 5)}
+חיפה     | ${this.futureEvent.Hayfa_in.slice(
       0,
       5
-    )} ${this.futureEvent.Hayfa_out.slice(0, 5)}
-    `;
+    )} | ${this.futureEvent.Hayfa_out.slice(0, 5)}`;
     console.log(message);
     const shareData: ShareData = {
       title: `זמני כניסה ויצאת שבתות וחגים`,
