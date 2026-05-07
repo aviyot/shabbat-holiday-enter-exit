@@ -12,8 +12,11 @@ body {
 
 body {
   background-color: #000;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/cover.jpg");
   background-position: center;
   background-size: cover;
+  background-attachment: fixed;
   font-family: sans-serif;
   color: white;
 }

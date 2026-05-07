@@ -136,18 +136,18 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
       </header>
 
       <nav className={styles.nav}>
-        <button onClick={goNext}>
-          <span>הבא</span>
-          {eventPosition > 0 && (
+        <button onClick={goBack}>
+          <span>הקודם</span>
+          {eventPosition < 0 && (
             <span className={styles.badge}>{eventPosition}</span>
           )}
         </button>
         <button onClick={goNear}>
           <span>מועד הקרוב</span>
         </button>
-        <button onClick={goBack}>
-          <span>הקודם</span>
-          {eventPosition < 0 && (
+        <button onClick={goNext}>
+          <span>הבא</span>
+          {eventPosition > 0 && (
             <span className={styles.badge}>{eventPosition}</span>
           )}
         </button>
@@ -164,9 +164,9 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
               }
             >
               <div className={styles.dataCaptionItem}>
-                <span>{formatDate(currentEvent.date)}</span>
-                <span style={{ padding: "0 0.5rem" }}> </span>
                 <span>{currentEvent.heb_date}</span>
+                <span style={{ padding: "0 0.5rem" }}> </span>
+                <span>{formatDate(currentEvent.date)}</span>
               </div>
               <div className={styles.dataCaptionItem}>
                 {currentEvent.type === "שבת" && (

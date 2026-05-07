@@ -8,7 +8,7 @@
 
 .data {
   display: grid;
-  grid-template-areas: "exit enter city";
+  grid-template-areas: "city enter exit";
   justify-content: space-around;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .nav button {
-  background-color: black;
+  background-color: transparent;
   color: white;
   font-size: 1.5rem;
   padding: 0.2rem;

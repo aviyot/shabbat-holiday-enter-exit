@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -6,12 +6,15 @@ export const metadata: Metadata = {
   description:
     "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
   manifest: "/manifest.webmanifest",
-  themeColor: "#1976d2",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "כניסה יציאה שבת",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1976d2",
 };
 
 export default function RootLayout({
@@ -26,10 +29,8 @@ export default function RootLayout({
           display: "grid",
           gridTemplateRows: "auto auto 1fr auto auto",
           minHeight: "100dvh",
-          opacity: 0.9,
           rowGap: "8px",
           textAlign: "right",
-          backgroundColor: "black",
           color: "white",
         }}
       >
