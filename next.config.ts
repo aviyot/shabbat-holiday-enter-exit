@@ -8,6 +8,9 @@ const withPWA = require("next-pwa")({
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  experimental: {
+    useCache: true,
+  },
 };
 
 module.exports = withPWA(nextConfig);
