@@ -5,7 +5,25 @@ export const metadata: Metadata = {
   title: "כניסת ויציאת שבת וחג",
   description:
     "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
+  keywords: [
+    "שבת",
+    "חג",
+    "זמני כניסה",
+    "זמני יציאה",
+    "ירושלים",
+    "תל אביב",
+    "פרשת שבוע",
+    "זמני שבת",
+  ],
   manifest: "/manifest.webmanifest",
+  openGraph: {
+    title: "כניסת ויציאת שבת וחג",
+    description:
+      "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
+    locale: "he_IL",
+    type: "website",
+    url: "https://shabbat-holiday-enter-exit.vercel.app/",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
