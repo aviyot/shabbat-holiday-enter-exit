@@ -1,0 +1,114 @@
+.header h1 {
+  text-align: center;
+  margin: 0.1rem;
+  font-size: 2rem;
+  padding: 1rem;
+  border-bottom: 1px solid gray;
+}
+
+.data {
+  display: grid;
+  grid-template-areas: "exit enter city";
+  justify-content: space-around;
+}
+
+.dataItem {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.dataItem > span:first-child {
+  font-weight: bold;
+  color: wheat;
+  padding: 4px;
+}
+
+.enter {
+  grid-area: enter;
+}
+
+.exit {
+  grid-area: exit;
+}
+
+.city {
+  grid-area: city;
+}
+
+.dataCaption {
+  color: white;
+}
+
+.dataCaptionActive {
+  color: orange;
+}
+
+.dataCaptionItem {
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 1rem 0;
+}
+
+.footer {
+  align-self: center;
+  margin: 1rem;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: minmax(60px, 1fr) minmax(120px, 2fr) minmax(60px, 1fr);
+  justify-content: space-around;
+  font-size: 1.5rem;
+}
+
+.nav button {
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.2rem;
+  border: none;
+  cursor: pointer;
+}
+
+.nav button:active {
+  background-color: gray;
+}
+
+.nav button:hover {
+  background-color: gray;
+}
+
+.main {
+  font-size: 1.5rem;
+}
+
+.hLink {
+  text-decoration: none;
+}
+
+.hLink:hover {
+  color: white;
+}
+
+.dataItem span {
+  padding: 0.2rem;
+}
+
+.badge {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: black;
+}
+
+.shareBtn {
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
