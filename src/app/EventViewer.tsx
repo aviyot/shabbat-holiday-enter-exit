@@ -218,7 +218,7 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
           </span>
           <a
             className={styles.hLink}
-            href="https://data.gov.il/organization/religion-office"
+            href="https://data.gov.il/he/datasets?orgs=religion-office"
             target="_blank"
             rel="noopener noreferrer"
           >
