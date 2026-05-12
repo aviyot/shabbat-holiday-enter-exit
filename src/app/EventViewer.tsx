@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import { toEventSlug } from "@/lib/eventSlug";
+import { toEventSlug, findBySlug } from "@/lib/eventSlug";
 import type { ShabatEnteExit } from "@/lib/types";
 import { formatHM } from "@/lib/hm";
 import { toHebWeek } from "@/lib/hebWeek";
@@ -34,38 +34,45 @@ function getDayName(dateStr: string): string {
 
 interface Props {
   records: ShabatEnteExit[];
-  initialIndex: number;
-  futureIndex: number;
 }
 
-export default function EventViewer({
-  records: serverRecords,
-  initialIndex,
-  futureIndex,
-}: Props) {
+export default function EventViewer({ records: serverRecords }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [records, setRecords] = useState<ShabatEnteExit[]>(serverRecords);
-  const [futureEventIndex, setFutureEventIndex] = useState(futureIndex);
-  const [eventIndex, setEventIndex] = useState(initialIndex);
-  const [dataLoaded, setDataLoaded] = useState(serverRecords.length > 0);
+  const [futureEventIndex, setFutureEventIndex] = useState(0);
+  const [eventIndex, setEventIndex] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [fromLocal, setFromLocal] = useState(false);
 
   useEffect(() => {
+    const computeFutureIndex = (recs: ShabatEnteExit[]) =>
+      Math.max(
+        0,
+        recs.findIndex(
+          (r) => new Date(r.date).getTime() > Date.now() - 86400000,
+        ),
+      );
+
     if (serverRecords.length > 0) {
       // Always persist fresh server data to localStorage (for offline/PWA)
       localStorage.setItem(LS_KEY, JSON.stringify(serverRecords));
       localStorage.setItem(LS_KEY_DATE, new Date().toISOString());
+
+      const fi = computeFutureIndex(serverRecords);
+      const event = searchParams.get("event");
+      const slugIndex = event ? findBySlug(serverRecords, event) : -1;
+      const initial = slugIndex >= 0 ? slugIndex : fi;
+
+      setFutureEventIndex(fi);
+      setEventIndex(initial);
+      setDataLoaded(true);
     } else {
       // Offline fallback: load from localStorage
       const stored = localStorage.getItem(LS_KEY);
       if (stored) {
         const parsed: ShabatEnteExit[] = JSON.parse(stored);
-        const fi = Math.max(
-          0,
-          parsed.findIndex(
-            (r) => new Date(r.date).getTime() > Date.now() - 86400000,
-          ),
-        );
+        const fi = computeFutureIndex(parsed);
         setRecords(parsed);
         setFutureEventIndex(fi);
         setEventIndex(fi);

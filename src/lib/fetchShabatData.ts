@@ -6,7 +6,7 @@ const API_URL =
 
 export async function fetchShabatData(): Promise<ShabatEnteExit[]> {
   "use cache";
-  cacheLife("days");
+  cacheLife("weeks");
 
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Failed to fetch from data.gov.il");
