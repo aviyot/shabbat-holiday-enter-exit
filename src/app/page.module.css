@@ -52,6 +52,17 @@
 .footer {
   align-self: center;
   margin: 1rem;
+  padding: 0.6rem 0.8rem;
+  background-color: #111;
+  border-radius: 6px;
+}
+
+.sourceFresh {
+  color: #86efac;
+}
+
+.sourceLocal {
+  color: #ffd180;
 }
 
 .nav {
@@ -105,6 +116,40 @@
   font-size: 1rem;
   margin: 1rem;
   cursor: pointer;
+}
+
+.shareArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shareMessage {
+  margin: 0 1rem;
+  text-align: center;
+}
+
+.shareMessage:empty {
+  display: none;
+}
+
+.shareText {
+  width: min(90%, 40rem);
+  margin: 1rem;
+  font: inherit;
+}
+
+.notice {
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #111;
+  text-align: center;
+}
+
+.nav button:disabled,
+.shareBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .loading {

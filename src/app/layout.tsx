@@ -3,6 +3,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sh-time.vercel.app"),
   title: "כניסת ויציאת שבת וחג",
   description:
     "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
@@ -33,7 +34,27 @@ export const metadata: Metadata = {
       "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
     locale: "he_IL",
     type: "website",
-    url: "https://shabbat-holiday-enter-exit.vercel.app/",
+    url: "/",
+    images: [
+      {
+        url: "/cover.jpg",
+        width: 643,
+        height: 429,
+        alt: "נרות שבת, חלות וגביע קידוש",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "כניסת ויציאת שבת וחג",
+    description:
+      "זמני כניסה ויציאת שבתות וחגים לערים ירושלים, תל אביב, באר שבע וחיפה",
+    images: [
+      {
+        url: "/cover.jpg",
+        alt: "נרות שבת, חלות וגביע קידוש",
+      },
+    ],
   },
   appleWebApp: {
     capable: true,

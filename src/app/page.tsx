@@ -7,7 +7,8 @@ async function PageContent() {
   let records: ShabatEnteExit[];
   try {
     records = await fetchShabatData();
-  } catch {
+  } catch (error) {
+    console.error("Failed to load Shabbat data", error);
     records = [];
   }
 

@@ -11,6 +11,25 @@ import { toHebWeek } from "@/lib/hebWeek";
 const LS_KEY = "shabatHolidyTime";
 const LS_KEY_DATE = "shabatHolidyTime_lastUpdate";
 
+function isShabatRecord(value: unknown): value is ShabatEnteExit {
+  if (typeof value !== "object" || value === null) return false;
+  return (
+    "heb_date" in value && typeof value.heb_date === "string" &&
+    "date" in value && typeof value.date === "string" &&
+    Number.isFinite(new Date(value.date).getTime()) &&
+    "parasha" in value && typeof value.parasha === "string" &&
+    "type" in value && typeof value.type === "string" &&
+    "Jerusalem_in" in value && typeof value.Jerusalem_in === "string" &&
+    "Jerusalem_out" in value && typeof value.Jerusalem_out === "string" &&
+    "TelAviv_in" in value && typeof value.TelAviv_in === "string" &&
+    "TelAviv_out" in value && typeof value.TelAviv_out === "string" &&
+    "BeerSheva_in" in value && typeof value.BeerSheva_in === "string" &&
+    "BeerSheva_out" in value && typeof value.BeerSheva_out === "string" &&
+    "Hayfa_in" in value && typeof value.Hayfa_in === "string" &&
+    "Hayfa_out" in value && typeof value.Hayfa_out === "string"
+  );
+}
+
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
   const dd = String(d.getDate()).padStart(2, "0");
@@ -44,6 +63,10 @@ export default function EventViewer({ records: serverRecords }: Props) {
   const [eventIndex, setEventIndex] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [fromLocal, setFromLocal] = useState(false);
+  const [loadError, setLoadError] = useState("");
+  const [storageNotice, setStorageNotice] = useState("");
+  const [shareMessage, setShareMessage] = useState("");
+  const [manualShareText, setManualShareText] = useState("");
 
   useEffect(() => {
     const computeFutureIndex = (recs: ShabatEnteExit[]) =>
@@ -55,9 +78,13 @@ export default function EventViewer({ records: serverRecords }: Props) {
       );
 
     if (serverRecords.length > 0) {
-      // Always persist fresh server data to localStorage (for offline/PWA)
-      localStorage.setItem(LS_KEY, JSON.stringify(serverRecords));
-      localStorage.setItem(LS_KEY_DATE, new Date().toISOString());
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(serverRecords));
+        localStorage.setItem(LS_KEY_DATE, new Date().toISOString());
+      } catch (error) {
+        console.error("Failed to save Shabbat data locally", error);
+        setStorageNotice("המידע מוצג, אך לא ניתן לשמור עותק במכשיר לשימוש ללא רשת.");
+      }
 
       const fi = computeFutureIndex(serverRecords);
       const event = searchParams.get("event");
@@ -66,21 +93,33 @@ export default function EventViewer({ records: serverRecords }: Props) {
 
       setFutureEventIndex(fi);
       setEventIndex(initial);
-      setDataLoaded(true);
     } else {
-      // Offline fallback: load from localStorage
-      const stored = localStorage.getItem(LS_KEY);
-      if (stored) {
-        const parsed: ShabatEnteExit[] = JSON.parse(stored);
+      try {
+        const stored = localStorage.getItem(LS_KEY);
+        if (!stored) throw new Error("No locally saved Shabbat data");
+        const parsed: unknown = JSON.parse(stored);
+        if (
+          !Array.isArray(parsed) ||
+          parsed.length === 0 ||
+          !parsed.every(isShabatRecord)
+        ) {
+          throw new Error("Invalid locally saved Shabbat data");
+        }
         const fi = computeFutureIndex(parsed);
+        const event = searchParams.get("event");
+        const slugIndex = event ? findBySlug(parsed, event) : -1;
+        const initial = slugIndex >= 0 ? slugIndex : fi;
         setRecords(parsed);
         setFutureEventIndex(fi);
-        setEventIndex(fi);
-        router.replace(`/?event=${toEventSlug(parsed[fi])}`, { scroll: false });
+        setEventIndex(initial);
+        router.replace(`/?event=${toEventSlug(parsed[initial])}`, { scroll: false });
         setFromLocal(true);
-        setDataLoaded(true);
+      } catch (error) {
+        console.error("Failed to load locally saved Shabbat data", error);
+        setLoadError("לא ניתן לטעון את זמני השבת והחג. בדקו את החיבור לאינטרנט ונסו שוב.");
       }
     }
+    setDataLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,6 +127,9 @@ export default function EventViewer({ records: serverRecords }: Props) {
   const currentEvent = records[eventIndex];
 
   function navigate(newIndex: number) {
+    if (!dataLoaded || !records[newIndex]) return;
+    setShareMessage("");
+    setManualShareText("");
     setEventIndex(newIndex);
     router.replace(`/?event=${toEventSlug(records[newIndex])}`, {
       scroll: false,
@@ -104,24 +146,57 @@ export default function EventViewer({ records: serverRecords }: Props) {
     navigate(futureEventIndex);
   }
 
-  function share() {
-    if (!currentEvent) return;
-    const type = currentEvent.type === "חג" ? "" : currentEvent.type;
-    const message = `${type} ${currentEvent.parasha}
-${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
+  async function share() {
+    if (!dataLoaded || !currentEvent) return;
+    setShareMessage("");
+    setManualShareText("");
+    const eventName = currentEvent.type === "שבת"
+      ? `שבת — פרשת ${currentEvent.parasha}`
+      : `${currentEvent.type} — ${currentEvent.parasha}`;
+    const message = `🕯️ זמני ${eventName}
+${currentEvent.heb_date} · ${formatDate(currentEvent.date)}
 
-עיר     | כניסה | יציאה
-ירושלים | ${formatHM(currentEvent.Jerusalem_in)} | ${formatHM(currentEvent.Jerusalem_out)}
-תל אביב | ${formatHM(currentEvent.TelAviv_in)} | ${formatHM(currentEvent.TelAviv_out)}
-באר שבע | ${formatHM(currentEvent.BeerSheva_in)} | ${formatHM(currentEvent.BeerSheva_out)}
-חיפה    | ${formatHM(currentEvent.Hayfa_in)} | ${formatHM(currentEvent.Hayfa_out)}`;
+📍 ירושלים
+כניסה: ${formatHM(currentEvent.Jerusalem_in)} · יציאה: ${formatHM(currentEvent.Jerusalem_out)}
 
+📍 תל אביב
+כניסה: ${formatHM(currentEvent.TelAviv_in)} · יציאה: ${formatHM(currentEvent.TelAviv_out)}
+
+📍 באר שבע
+כניסה: ${formatHM(currentEvent.BeerSheva_in)} · יציאה: ${formatHM(currentEvent.BeerSheva_out)}
+
+📍 חיפה
+כניסה: ${formatHM(currentEvent.Hayfa_in)} · יציאה: ${formatHM(currentEvent.Hayfa_out)}`;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("event", toEventSlug(currentEvent));
     const shareData: ShareData = {
       title: "זמני כניסה ויציאת שבתות וחגים",
       text: message,
-      url: window.location.href,
+      url: url.href,
     };
-    navigator.share(shareData).catch(console.error);
+    if (typeof navigator.share === "function") {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
+        console.error("Failed to share Shabbat times", error);
+      }
+    }
+
+    const text = `${message}\n\n${url.href}`;
+    if (typeof navigator.clipboard?.writeText === "function") {
+      try {
+        await navigator.clipboard.writeText(text);
+        setShareMessage("הזמנים והקישור הועתקו ללוח.");
+        return;
+      } catch (error) {
+        console.error("Failed to copy Shabbat times", error);
+      }
+    }
+    setManualShareText(text);
+    setShareMessage("השיתוף או ההעתקה האוטומטית אינם זמינים. ניתן להעתיק את הטקסט הבא ידנית.");
   }
 
   const isHoliday =
@@ -136,16 +211,16 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
       </header>
 
       <nav className={styles.nav}>
-        <button onClick={goBack}>
+        <button onClick={goBack} disabled={!dataLoaded || !currentEvent}>
           <span>הקודם</span>
           {eventPosition < 0 && (
             <span className={styles.badge}>{eventPosition}</span>
           )}
         </button>
-        <button onClick={goNear}>
+        <button onClick={goNear} disabled={!dataLoaded || !currentEvent}>
           <span>מועד הקרוב</span>
         </button>
-        <button onClick={goNext}>
+        <button onClick={goNext} disabled={!dataLoaded || !currentEvent}>
           <span>הבא</span>
           {eventPosition > 0 && (
             <span className={styles.badge}>{eventPosition}</span>
@@ -154,7 +229,13 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
       </nav>
 
       <main className={styles.main}>
-        {dataLoaded && currentEvent ? (
+        {storageNotice && <p className={styles.notice} role="status">{storageNotice}</p>}
+        {loadError ? (
+          <div className={styles.notice}>
+            <p role="alert">{loadError}</p>
+            <button onClick={() => window.location.reload()}>נסה שוב</button>
+          </div>
+        ) : dataLoaded && currentEvent ? (
           <section>
             <header
               className={
@@ -212,15 +293,26 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
         )}
       </main>
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <button className={styles.shareBtn} onClick={share}>
+      <div className={styles.shareArea}>
+        <button className={styles.shareBtn} onClick={share} disabled={!dataLoaded || !currentEvent}>
           שתף
         </button>
+        <p className={styles.shareMessage} role="status">{shareMessage}</p>
+        {manualShareText && (
+          <textarea
+            className={styles.shareText}
+            aria-label="טקסט לשיתוף בהעתקה ידנית"
+            readOnly
+            value={manualShareText}
+            rows={10}
+            onFocus={(event) => event.currentTarget.select()}
+          />
+        )}
       </div>
 
-      {dataLoaded && (
+      {dataLoaded && currentEvent && (
         <footer className={styles.footer}>
-          <span style={{ color: fromLocal ? "orange" : "green" }}>
+          <span className={fromLocal ? styles.sourceLocal : styles.sourceFresh}>
             המידע נלקח מ{" "}
           </span>
           <a
@@ -231,6 +323,7 @@ ${currentEvent.heb_date} - ${currentEvent.date.slice(0, 10)}
           >
             המשרד לשירותי הדת
           </a>
+          {fromLocal && <span> (עותק שמור במכשיר; לא ניתן לטעון מידע מהשרת)</span>}
         </footer>
       )}
     </>
