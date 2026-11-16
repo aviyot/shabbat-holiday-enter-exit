@@ -49,6 +49,12 @@
   margin: 1rem 0;
 }
 
+.dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .footer {
   align-self: center;
   margin: 1rem;

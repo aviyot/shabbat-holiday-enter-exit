@@ -244,10 +244,9 @@ ${currentEvent.heb_date} · ${formatDate(currentEvent.date)}
                   : styles.dataCaption
               }
             >
-              <div className={styles.dataCaptionItem}>
-                <span>{currentEvent.heb_date}</span>
-                <span style={{ padding: "0 0.5rem" }}> </span>
-                <span>{formatDate(currentEvent.date)}</span>
+              <div className={`${styles.dataCaptionItem} ${styles.dates}`}>
+                <div>{currentEvent.heb_date}</div>
+                <div>{formatDate(currentEvent.date)}</div>
               </div>
               <div className={styles.dataCaptionItem}>
                 {currentEvent.type === "שבת" && (
